@@ -15,7 +15,7 @@ public class Cliente {
     private String cpf;
     private LocalDate nascimento;
     private Integer renda;
-    private static DateTimeFormatter FOMATADOR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter FOMATADOR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public  Cliente(String nome,String cpf,LocalDate nascimento,Integer renda) {
         if (nome.length()>5 && nome.matches("^[a-zA-ZÀ-ú\\\\s]+$")){
