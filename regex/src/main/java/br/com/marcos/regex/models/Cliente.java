@@ -6,6 +6,7 @@ import br.com.marcos.regex.exceptions.NomeInvalidoException;
 import br.com.marcos.regex.exceptions.RendaInvalidaException;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
@@ -13,11 +14,11 @@ public class Cliente {
     private String nome;
     private String cpf;
     private LocalDate nascimento;
-    private Double renda;
+    private Integer renda;
     private static DateTimeFormatter FOMATADOR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public  Cliente(String nome,String cpf,LocalDate nascimento,Double renda) {
-        if (nome.length()>5 && nome.matches("^[a-zA-Z]+$")){
+    public  Cliente(String nome,String cpf,LocalDate nascimento,Integer renda) {
+        if (nome.length()>5 && nome.matches("^[a-zA-ZÀ-ú\\\\s]+$")){
             this.nome = nome;
         }else{
             throw new NomeInvalidoException("Nome com menos de 5 caracteres ou números foram inseridos!");
@@ -32,7 +33,7 @@ public class Cliente {
       }else{
           throw new MenorIdadeException("Menor de idade!");
       }
-        if(renda>1.200&&renda<15.00){
+        if(renda>1200&&renda<15000){
             this.renda = renda;
         }else{
             throw new RendaInvalidaException("Renda fora dos requisitos!");
@@ -48,13 +49,12 @@ public class Cliente {
         var mes = sc.nextInt();
         var ano = sc.nextInt();
         System.out.println("Digite o valor de sua renda:");
-        var renda = sc.nextDouble();
+        var renda = sc.nextInt();
 
         return new Cliente(nome,CPF,LocalDate.of(ano,mes,dia),renda);
     }
     public int getIdade(LocalDate nascimento){
-        var hoje = LocalDate.now();
-        return hoje.getYear()-nascimento.getYear();
+        return Period.between(nascimento,LocalDate.now()).getYears();
     }
 
     public String getNome() {
@@ -81,11 +81,11 @@ public class Cliente {
         this.nascimento = nascimento;
     }
 
-    public Double getRenda() {
+    public Integer getRenda() {
         return renda;
     }
 
-    public void setRenda(Double renda) {
+    public void setRenda(Integer renda) {
         this.renda = renda;
     }
 
